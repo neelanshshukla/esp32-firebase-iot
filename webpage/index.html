@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 Firebase Data</title>
+</head>
+<body style="text-align: center; font-family: Arial; margin-top: 50px; background-color: black;">
+
+    <h1 style="color: orange;">ESP32 Live Data from Firebase</h1>
+    
+    <h2 id="message" style="color: orangered;">Waiting for data...</h2>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        var firebaseConfig = 
+        {
+            apiKey: "AIzaSyAZKNYVMUbeW9lh-b1uGWGb4tuf_xAXCSc",
+            databaseURL: "https://esp32-firebase-project-6a28e-default-rtdb.asia-southeast1.firebasedatabase.app",
+        };
+
+        // 3. Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // 4. Point to the database path where the ESP32 is saving data
+        var databaseRef = firebase.database().ref('serialData/message');
+
+        // 5. Listen for changes and update the HTML
+        databaseRef.on('value', function(snapshot)
+         {
+            var data = snapshot.val();
+            document.getElementById('message').innerText = data;
+        });
+    </script>
+</body>
+</html>
